@@ -76,7 +76,7 @@ GitHub contributions and public commits over the last 12 months.
 
 <picture>
   <source media="(max-width: 600px)" srcset="assets/activity-mobile.svg">
-  <img src="assets/activity.svg" width="100%" alt="1,232 contributions, 120 active days and 12 public commits. 2025-10-05 to 2026-10-05.">
+  <img src="assets/activity.svg" width="100%" alt="1,234 contributions, 120 active days and 12 public commits. 2025-10-05 to 2026-10-05.">
 </picture>
 
 <details>
@@ -98,7 +98,7 @@ GitHub contributions and public commits over the last 12 months.
 | 2026-07 | 110 |
 | 2026-08 | 204 |
 | 2026-09 | 89 |
-| 2026-10 | 25 |
+| 2026-10 | 27 |
 
 </details>
 
