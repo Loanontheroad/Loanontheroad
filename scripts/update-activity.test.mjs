@@ -1,11 +1,11 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {parseCalendar,summarise,publicUpdates,validateSearch,replaceActivity,renderSvg} from './update-activity.mjs';
+import {parseCalendar,summarise,publicUpdates,validateSearch,replaceActivity,renderSvg,calendarLayout} from './update-activity.mjs';
 
 const fixture=Array.from({length:366},(_,i)=>{
   const date=new Date(Date.UTC(2025,9,5)+i*86400000).toISOString().slice(0,10);
   const count=i%3===0?2:0;
-  return `<td data-date="${date}" id="day-${i}"></td><tool-tip for="day-${i}">${count?`${count} contributions`:'No contributions'} on a date.</tool-tip>`;
+  return `<td data-date="${date}" data-level="${count?2:0}" id="day-${i}"></td><tool-tip for="day-${i}">${count?`${count} contributions`:'No contributions'} on a date.</tool-tip>`;
 }).join('');
 
 test('Calendar joins tooltip IDs, orders days, and counts real zeroes',()=>{
@@ -43,11 +43,30 @@ test('Generator edits exactly its section, is repeatable, and requires unique ma
   assert.throws(()=>replaceActivity(original+'<!-- DEVELOPMENT-ACTIVITY:START -->',block));
 });
 test('Desktop and mobile charts preserve zero activity and never contain NaN',()=>{
-  const stats=summarise(parseCalendar(fixture,'2026-10-05').map(day=>({...day,count:0})),0);
+  const stats=summarise(parseCalendar(fixture,'2026-10-05').map(day=>({...day,count:0,level:0})),0);
   for(const options of [{},{mobile:true}]) {
     const svg=renderSvg(stats,options);
     assert.ok(!svg.includes('NaN'));
     assert.ok(svg.includes('0 GitHub contributions'));
     assert.ok(svg.includes('<desc'));
   }
+});
+test('Daily grids keep every date once, with correct weekday and week positions on both sizes',()=>{
+  const days=parseCalendar(fixture,'2026-10-05');
+  const stats=summarise(days,17);
+  const layout=calendarLayout(days);
+  assert.equal(layout[0].weekday,0);
+  assert.equal(layout[7].week,1);
+  assert.equal(layout.at(-1).weekday,1);
+  assert.equal(layout.at(-1).week,52);
+  for(const mobile of [false,true]) {
+    const svg=renderSvg(stats,{mobile});
+    const dates=[...svg.matchAll(/data-date="([^"]+)"/g)].map(m=>m[1]);
+    assert.deepEqual(dates,days.map(d=>d.date));
+    assert.equal(new Set(dates).size,366);
+  }
+});
+test('Malformed calendar intensity cannot silently change the heatmap',()=>{
+  assert.throws(()=>parseCalendar(fixture.replace('data-level="2"','data-level="9"'),'2026-10-05'));
+  assert.throws(()=>parseCalendar(fixture.replace('data-level="2"','data-level="0"'),'2026-10-05'));
 });
