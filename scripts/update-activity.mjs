@@ -126,7 +126,7 @@ export function renderSvg(stats,{mobile=false}={}) {
 
 export function activityMarkdown(stats) {
   const alt=escapeXml(`${fmt(stats.contributions)} contributions, ${stats.activeDays} active days and ${stats.publicCommits} public commits. ${stats.from} to ${stats.to}.`);
-  return `${START}\n\n<picture>\n  <source media="(max-width: 600px)" srcset="assets/activity-mobile.svg">\n  <img src="assets/activity.svg" width="100%" alt="${alt}">\n</picture>\n\n<details>\n<summary>View activity data</summary>\n\n${stats.from} to ${stats.to}. The calendar reflects contributions visible on my GitHub profile, including anonymised private activity when enabled. Commit counts cover public repositories. The first and last months may be partial.\n\n| Month | Contributions |\n| :--- | ---: |\n${stats.months.map(({month,count})=>`| ${month} | ${fmt(count)} |`).join('\n')}\n\n</details>\n\n${END}`;
+  return `${START}\n\n<picture>\n  <source media="(max-width: 600px)" srcset="assets/activity-mobile.svg">\n  <img src="assets/activity.svg" width="100%" alt="${alt}">\n</picture>\n\n${END}`;
 }
 
 export function replaceActivity(readme,block) {
