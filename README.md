@@ -1,4 +1,4 @@
-<img src="assets/header-en.png" alt="CodedByLoan. Websites, apps and automation. Luis · Loanontheroad." width="100%">
+<img src="assets/header-en.webp" alt="CodedByLoan. Websites, apps and automation. Luis · Loanontheroad." width="100%">
 
 ## Hi, I'm Luis
 
