@@ -67,15 +67,6 @@ export function validateSearch(result) {
   return result;
 }
 
-export function publicUpdates(items) {
-  return items.slice(0,3).map(item=> {
-    if (item.repository?.private !== false || !/^[\w.-]+\/[\w.-]+$/.test(item.repository.full_name) || !/^[0-9a-f]{40}$/.test(item.sha)) throw new Error('Invalid public commit.');
-    const expected = `https://github.com/${item.repository.full_name}/commit/${item.sha}`;
-    if(item.html_url !== expected || !Number.isFinite(Date.parse(item.commit?.author?.date))) throw new Error('Invalid commit URL or date.');
-    return {repository:item.repository.full_name,sha:item.sha,url:expected,date:item.commit.author.date.slice(0,10)};
-  });
-}
-
 export function calendarLayout(days) {
   const first=new Date(days[0].date+'T00:00:00Z');
   const sunday=first.getTime()-first.getUTCDay()*DAY;
@@ -85,7 +76,7 @@ export function calendarLayout(days) {
 export function renderSvg(stats,{mobile=false}={}) {
   const width=mobile?420:860, height=mobile?438:306;
   const c={bg:'#f8f8f6',ink:'#0e1013',muted:'#59636e',empty:'#cfd5dc'};
-  const blues=['none','#d6deff','#a1b2ff','#617cff','#2743ff'];
+  const blues=['none','#a8b7ff','#7a92ff','#4c69ff','#2743ff'];
   const cells=calendarLayout(stats.days), weeks=cells.at(-1).week+1;
   const split=mobile?Math.ceil(weeks/2):weeks;
   const left=mobile?56:56,right=width-24;
@@ -133,13 +124,9 @@ export function renderSvg(stats,{mobile=false}={}) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="title description"><title id="title">Development activity</title><desc id="description">${escapeXml(description)}</desc><g font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">${body}</g></svg>\n`;
 }
 
-export function activityMarkdown(stats,updates) {
+export function activityMarkdown(stats) {
   const alt=escapeXml(`${fmt(stats.contributions)} contributions, ${stats.activeDays} active days and ${stats.publicCommits} public commits. ${stats.from} to ${stats.to}.`);
-  const updateLines=updates.map(item=> {
-    const date=new Date(item.date+'T00:00:00Z').toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'});
-    return `- **[${item.repository}](${item.url})** · ${date} · [\`${item.sha.slice(0,7)}\`](${item.url})`;
-  });
-  return `${START}\n\n<picture>\n  <source media="(max-width: 600px)" srcset="assets/activity-mobile.svg">\n  <img src="assets/activity.svg" width="100%" alt="${alt}">\n</picture>\n\n### Latest public project commits\n\n${updateLines.length?updateLines.join('\n'):'No public project commits in this period.'}\n\n<details>\n<summary>View activity data</summary>\n\n${stats.from} to ${stats.to}. The calendar reflects contributions visible on my GitHub profile, including anonymised private activity when enabled. Commit counts and links cover public repositories. The first and last months may be partial.\n\n| Month | Contributions |\n| :--- | ---: |\n${stats.months.map(({month,count})=>`| ${month} | ${fmt(count)} |`).join('\n')}\n\n</details>\n\n${END}`;
+  return `${START}\n\n<picture>\n  <source media="(max-width: 600px)" srcset="assets/activity-mobile.svg">\n  <img src="assets/activity.svg" width="100%" alt="${alt}">\n</picture>\n\n<details>\n<summary>View activity data</summary>\n\n${stats.from} to ${stats.to}. The calendar reflects contributions visible on my GitHub profile, including anonymised private activity when enabled. Commit counts cover public repositories. The first and last months may be partial.\n\n| Month | Contributions |\n| :--- | ---: |\n${stats.months.map(({month,count})=>`| ${month} | ${fmt(count)} |`).join('\n')}\n\n</details>\n\n${END}`;
 }
 
 export function replaceActivity(readme,block) {
@@ -161,13 +148,10 @@ export async function updateActivity(root=ROOT, username=process.env.PROFILE_USE
   const days=parseCalendar(calendar,today);
   const period=`author:${username} author-date:${days[0].date}..${today}`;
   const searchUrl=query=>`https://api.github.com/search/commits?q=${encodeURIComponent(query)}&sort=author-date&order=desc&per_page=3`;
-  const [all,recent]=await Promise.all([
-    get(searchUrl(period)),get(searchUrl(`${period} -repo:${username}/${username}`))
-  ]);
+  const all=await get(searchUrl(period));
   const stats=summarise(days,validateSearch(all).total_count);
-  const updates=publicUpdates(validateSearch(recent).items);
   const original=(await readFile(path.join(root,'README.md'),'utf8')).replace(/\r\n/g,'\n');
-  const readme=replaceActivity(original,activityMarkdown(stats,updates));
+  const readme=replaceActivity(original,activityMarkdown(stats));
   const assets=path.join(root,'assets');
   await mkdir(assets,{recursive:true});
   // Validate all input before replacing any files. Fetch failures never produce zeroed charts.
@@ -179,8 +163,8 @@ export async function updateActivity(root=ROOT, username=process.env.PROFILE_USE
   for(const [name] of files) await rename(path.join(assets,name+'.tmp'),path.join(assets,name));
   await rename(path.join(root,'README.md.tmp'),path.join(root,'README.md'));
   const {days:dailyData,...summary}=stats;
-  console.log(JSON.stringify({...summary,updates,source:'Public GitHub endpoints; no API token used'},null,2));
-  return {stats,updates};
+  console.log(JSON.stringify({...summary,source:'Public GitHub endpoints; no API token used'},null,2));
+  return {stats};
 }
 
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)) {

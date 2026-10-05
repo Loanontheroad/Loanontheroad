@@ -76,19 +76,13 @@ GitHub contributions and public commits over the last 12 months.
 
 <picture>
   <source media="(max-width: 600px)" srcset="assets/activity-mobile.svg">
-  <img src="assets/activity.svg" width="100%" alt="1,232 contributions, 120 active days and 11 public commits. 2025-10-05 to 2026-10-05.">
+  <img src="assets/activity.svg" width="100%" alt="1,232 contributions, 120 active days and 12 public commits. 2025-10-05 to 2026-10-05.">
 </picture>
-
-### Latest public project commits
-
-- **[QR-e/DOZE](https://github.com/QR-e/DOZE/commit/5b4ee66b05c9ace2e7e5fa23984dd78ebcf788d1)** · 02 Oct 2026 · [`5b4ee66`](https://github.com/QR-e/DOZE/commit/5b4ee66b05c9ace2e7e5fa23984dd78ebcf788d1)
-- **[QR-e/DOZE](https://github.com/QR-e/DOZE/commit/1b395d85a69ed7b76ef8a5e8af5270f95e70270e)** · 15 Sept 2026 · [`1b395d8`](https://github.com/QR-e/DOZE/commit/1b395d85a69ed7b76ef8a5e8af5270f95e70270e)
-- **[QR-e/DOZE](https://github.com/QR-e/DOZE/commit/f9798febf1ff485c0cf8ec70dedff68aa9458df9)** · 15 Sept 2026 · [`f9798fe`](https://github.com/QR-e/DOZE/commit/f9798febf1ff485c0cf8ec70dedff68aa9458df9)
 
 <details>
 <summary>View activity data</summary>
 
-2025-10-05 to 2026-10-05. The calendar reflects contributions visible on my GitHub profile, including anonymised private activity when enabled. Commit counts and links cover public repositories. The first and last months may be partial.
+2025-10-05 to 2026-10-05. The calendar reflects contributions visible on my GitHub profile, including anonymised private activity when enabled. Commit counts cover public repositories. The first and last months may be partial.
 
 | Month | Contributions |
 | :--- | ---: |

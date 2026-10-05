@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {parseCalendar,summarise,publicUpdates,validateSearch,replaceActivity,renderSvg,calendarLayout} from './update-activity.mjs';
+import {parseCalendar,summarise,validateSearch,replaceActivity,renderSvg,calendarLayout} from './update-activity.mjs';
 
 const fixture=Array.from({length:366},(_,i)=>{
   const date=new Date(Date.UTC(2025,9,5)+i*86400000).toISOString().slice(0,10);
@@ -25,13 +25,6 @@ test('Changed HTML, missing dates and duplicate dates fail instead of silently p
 test('Incomplete public searches are rejected',()=>{
   assert.throws(()=>validateSearch({total_count:0,incomplete_results:true,items:[]}));
   assert.equal(validateSearch({total_count:0,incomplete_results:false,items:[]}).total_count,0);
-});
-test('Private repositories and unexpected commit destinations cannot enter the README',()=>{
-  const sha='a'.repeat(40);
-  const item={repository:{private:false,full_name:'user/repo'},sha,html_url:`https://github.com/user/repo/commit/${sha}`,commit:{author:{date:'2026-10-01T12:00:00Z'}}};
-  assert.equal(publicUpdates([item])[0].sha,sha);
-  assert.throws(()=>publicUpdates([{...item,repository:{...item.repository,private:true}}]));
-  assert.throws(()=>publicUpdates([{...item,html_url:'https://example.com/'}]));
 });
 test('Generator edits exactly its section, is repeatable, and requires unique markers',()=>{
   const original='before\n<!-- DEVELOPMENT-ACTIVITY:START -->old<!-- DEVELOPMENT-ACTIVITY:END -->\nafter';
