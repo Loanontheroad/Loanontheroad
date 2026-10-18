@@ -68,19 +68,6 @@ Technologies and tools I've worked with across projects.
 
 **[Casal de Son Ferriol ↗︎](https://casaldesonferriol.vercel.app/)**<br>A home for neighbourhood life. Activities, events and local information in two languages.
 
-## Development activity
-
-GitHub contributions and public commits over the last 12 months.
-
-<!-- DEVELOPMENT-ACTIVITY:START -->
-
-<picture>
-  <source media="(max-width: 600px)" srcset="assets/activity-mobile.svg">
-  <img src="assets/activity.svg" width="100%" alt="1,295 contributions, 127 active days and 16 public commits. 2025-10-17 to 2026-10-17.">
-</picture>
-
-<!-- DEVELOPMENT-ACTIVITY:END -->
-
 ---
 
 Have a project in mind? [Let's talk ↗︎](mailto:codedbyloan@gmail.com)
