@@ -4,11 +4,17 @@
 
 **CEO & Full-stack Developer at [CodedByLoan](https://www.codedbyloan.com/).**
 
-I build websites, applications and automations, connecting thoughtful interfaces with the systems behind them. My work spans web and mobile, backend services, integrations and legacy modernisation.
+I build websites, mobile apps and automations, connecting interfaces with the systems behind them. My work spans backend services, integrations and legacy modernisation, from the first sketch through deployment and maintenance.
 
-From the first sketch to deployment, I care about how things look, how they work and how they hold up over time.
+[Explore my portfolio](https://www.codedbyloan.com/) · [Get in touch](mailto:codedbyloan@gmail.com)
 
-[Explore my portfolio ↗︎](https://www.codedbyloan.com/) · [Get in touch ↗︎](mailto:codedbyloan@gmail.com)
+## Selected projects
+
+| Project | What it does |
+| --- | --- |
+| [Meteo de les Illes](https://www.meteodelesilles.com/) | Weather forecasts, alerts and a community map for the Balearic Islands. |
+| [DOZE Burger & Drink](https://www.dozeburger.com/) | Restaurant website with menus, cakes, gift vouchers and contact. |
+| [Casal de Son Ferriol](https://casaldesonferriol.vercel.app/) | Activities, events and neighbourhood information in two languages. |
 
 ## My toolkit
 
@@ -55,19 +61,11 @@ Technologies and tools I've worked with across projects.
 </tr>
 <tr>
 <td valign="top" width="20%"><img src="assets/icons/design.svg" width="20" height="20" align="absmiddle" alt=""> <strong>Design &amp; tools</strong></td>
-<td>Figma · Blender · SQL Developer · Git</td>
+<td>Figma · Blender · SQL Developer · Git · Codex</td>
 </tr>
 </tbody>
 </table>
 
-## Recent work
-
-**[Meteo de les Illes ↗︎](https://www.meteodelesilles.com/)**<br>Weather for the Balearic Islands. Forecasts, alerts and a community-powered map.
-
-**[Doze Burger & Drink ↗︎](https://www.dozeburger.com/)**<br>A restaurant, made digital. A mobile-first home for menus, cakes and contact.
-
-**[Casal de Son Ferriol ↗︎](https://casaldesonferriol.vercel.app/)**<br>A home for neighbourhood life. Activities, events and local information in two languages.
-
 ---
 
-Have a project in mind? [Let's talk ↗︎](mailto:codedbyloan@gmail.com)
+Have a project in mind? [Let's talk](mailto:codedbyloan@gmail.com).
